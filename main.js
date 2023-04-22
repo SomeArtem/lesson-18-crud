@@ -86,7 +86,8 @@ domTaskColumn.onclick = (e) => {
     taskOperation(taskVO, domTask);
   }
 };
-getDOM(DOM.Button.CREATE_TASK).onclick = () => {
+//getDOM(DOM.Button.CREATE_TASK).onclick = () => {
+getDOM(DOM.Button.CREATE_TASK).addEventListener('click',()=>{
   console.log('> domPopupCreateTask.classList');
   renderTaskPopup(
     null,
@@ -103,7 +104,8 @@ getDOM(DOM.Button.CREATE_TASK).onclick = () => {
       saveTask();
     }
   );
-};
+
+});
 
 function renderTask(taskVO) {
   const domTaskClone = domTemplateTask.cloneNode(true);
