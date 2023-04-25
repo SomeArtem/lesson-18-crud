@@ -1,6 +1,7 @@
 import 'uno.css';
 import '@unocss/reset/tailwind.css';
 import DOM from './src/constants/dom';
+import { delay } from './src/utils/timeUtils';
 
 const KEY_LOCAL_TASKS = 'tasks';
 
@@ -98,7 +99,7 @@ domTaskColumn.onclick = (e) => {
   }
 };
 //getDOM(DOM.Button.CREATE_TASK).onclick = () => {
-getDOM(DOM.Button.CREATE_TASK).addEventListener('click',()=>{
+getDOM(DOM.Button.CREATE_TASK).addEventListener('click', () => {
   console.log('> domPopupCreateTask.classList');
   renderTaskPopup(
     null,
@@ -164,17 +165,21 @@ async function renderTaskPopup(
     taskPopupInstance.taskTitle = taskVO.title;
   }
 
-  // setTimeout(() => {
-  domSpinner.remove();
-  document.onkeyup = (e) => {
-    if (e.key === 'Escape') {
-      onClosePopup();
-    }
-  };
-  domPopupContainer.append(taskPopupInstance.render());
-  // }, 1000);
+  delay(1000).then(() => {
+    console.log('render 1');
+    domSpinner.remove();
+    document.onkeyup = (e) => {
+      if (e.key === 'Escape') {
+        onClosePopup();
+      }
+    };
+    domPopupContainer.append(taskPopupInstance.render());
+  });
+
 }
 
 function saveTask() {
   localStorage.setItem(KEY_LOCAL_TASKS, JSON.stringify(tasks));
 }
+
+
