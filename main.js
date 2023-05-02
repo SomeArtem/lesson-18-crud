@@ -3,7 +3,6 @@ import '@unocss/reset/tailwind.css';
 import DOM from './src/constants/dom';
 import { delay } from './src/utils/timeUtils';
 import TasksModel from './src/mvc/model/TasksModel';
-import TaskVO from './src/mvc/model/vo/TaskVO';
 import TasksController from './src/mvc/controller/TasksController';
 
 const KEY_LOCAL_TASKS = 'tasks';
