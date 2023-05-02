@@ -1,9 +1,12 @@
 import 'uno.css';
 import '@unocss/reset/tailwind.css';
+import "toastify-js/src/toastify.css";
 import DOM from './src/constants/dom';
 import { delay } from './src/utils/timeUtils';
+import Toastify from 'toastify-js'
 import TasksModel from './src/mvc/model/TasksModel';
 import TasksController from './src/mvc/controller/TasksController';
+
 
 const KEY_LOCAL_TASKS = 'tasks';
 
@@ -32,6 +35,12 @@ function renderTask(taskVO) {
   return domTaskClone;
 }
 
+const showToastWithText=(text)=>Toastify({
+  text: text,
+  duration:3000,
+  close: true,  
+}).showToast();
+
 //const rawTasks = localStorage.getItem(KEY_LOCAL_TASKS);
 
 async function main() {
@@ -41,7 +50,10 @@ async function main() {
     tasks.forEach((taskVO) =>  renderTask(taskVO) );
   });
 
-  tasksController.retrieveTasks();
+  tasksController
+    .retrieveTasks()
+    .then(()=>{})
+    .catch((e)=>{});
 
 
 
@@ -55,20 +67,34 @@ async function main() {
         'Create',
         (taskTitle, taskDate, taskTag) => {
           console.log('> Create task -> On Confirm');
-          tasksController.createTask(taskTitle, taskDate, taskTag);
+          tasksController.createTask(taskTitle, taskDate, taskTag)
+          .then((taskVO)=>{
+            console.log('> Create task -> task added suxassfuly');
+            showToastWithText(`your task saved.title: ${taskVO.title}`);
+          })
+          .catch((err)=>{
+            console.log('> Create task -> task add error', err);
+            window.alert(`error on server ${err.toString()}`);
+          });
         }
       );
     },
-    [DOM.Template.Task.BTN_DELETE]: (taskVO, domTask) => {
+    [DOM.Template.Task.BTN_DELETE]: (taskId) => {
+      const taskVO=tasksModel.getTaskById(taskId);
       renderTaskPopup(taskVO, "Confirm delete task", "Delete", (taskTitle, taskDate, taskTag) => {
         console.log("> Delete task -> On Confirm", {
           taskTitle,
           taskDate,
           taskTag,
         });
-        tasks.splice(tasks.indexOf(taskVO), 1);
-        domTaskColumn.removeChild(domTask);
-        saveTask();
+        tasksController.deleteTask(taskId).then(()=>{
+          console.log('> deleteTask -> task deleteT suxassfuly');
+          showToastWithText(`your task deleted. title: ${taskVO.title}`);
+
+        });
+        // tasks.splice(tasks.indexOf(taskVO), 1);
+        // domTaskColumn.removeChild(domTask);
+        // saveTask();
       });
     },
     [DOM.Template.Task.BTN_EDIT]: (taskVO, domTask) => {
@@ -113,12 +139,12 @@ async function main() {
       taskId = domTask.dataset.id;
     } while (!taskId);
 
-    const taskVO = tasks.find((task) => task.id === taskId);
-    console.log('> taskVO:', taskVO);
+    // const taskVO = tasks.find((task) => task.id === taskId);
+    // console.log('> taskVO:', taskVO);
 
     const taskOperation = taskOperations[taskBtn];
     if (taskOperation) {
-      taskOperation(taskVO, domTask);
+      taskOperation(taskId);//было taskVO, domTask
     }
   };
 
