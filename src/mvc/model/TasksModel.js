@@ -13,6 +13,7 @@ class TasksModel{
     }
 
     #update(){
+        
         this.#updateCallbacks.forEach(c=>c(this.#tasks));
     }
     addUpdateCallback(updateCallback){
