@@ -98,6 +98,7 @@ async function main() {
       });
     },
     [DOM.Template.Task.BTN_EDIT]: (taskVO, domTask) => {
+      //начало 24 занятия
       renderTaskPopup(
         taskVO,
         'Update task',
