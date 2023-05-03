@@ -43,6 +43,15 @@ class TasksModel{
         this.#update();
         // this.tasks=[...this.#tasks,taskVO];
     }
+    updateTask(taskId, taskVO){
+        console.log("TasksModel - updateTask: ",taskId,taskVO );
+        const taskvooo = this.getTaskById(taskId);
+        Object.assign(taskvooo,taskVO);
+        // taskvooo.title=taskVO.title;
+        // const index=this.#tasks.findIndex((task)=>task.id===taskId);
+        // this.#tasks.splice(index, taskVO);
+        this.#update();
+    }
 }
 
 export default TasksModel;

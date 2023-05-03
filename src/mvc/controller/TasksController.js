@@ -4,14 +4,17 @@ import TaskVO from "../model/vo/TaskVO";
 class TasksController{
     
     #model;
-    constructor(model){
+    #networkService;    
+    constructor(model, networkService){
         this.#model=model;
+        this.#networkService=networkService;
     }
 
     async retrieveTasks(){
       try {
-        this.#model.tasks = await fetch('http://localhost:3000/tasks')
-        .then((response) => response.ok && response.json())
+        this.#model.tasks = await this.#networkService.retrieveFromPath('tasks')
+        //this.#model.tasks = await fetch('http://localhost:3000/tasks')
+        //.then((response) => response.ok && response.json())
         .then((rawTasks) => {
           if (rawTasks && rawTasks instanceof Array) {
             console.log('json', rawTasks);
@@ -75,7 +78,27 @@ class TasksController{
         // tasks.push(taskVO);
 
         // saveTask();
-      }
+    }
+
+    updateTaskById(taskId, taskTitle, taskDate, taskTag){
+      console.log('> TasksController -> updateTaskById, taskId= ',taskId);
+
+    return fetch(`http://localhost:3000/tasks/${taskId}`,{
+      method:'PUT',
+      headers:{
+        'Content-Type':'application/json'
+        },
+        body: JSON.stringify({"title":taskTitle, "date":taskDate, "tag": taskTag}),
+      }).then((response)=> response.json())
+      .then((data)=>{
+        console.log('TasksController-updateTaskById: response= ', data);
+        const taskVO=TaskVO.fromJSON(data);
+        this.#model.updateTask(taskId, taskVO);
+
+      }).catch((e)=>{
+        console.error('TasksController-updateTaskById: error= ', e);
+      });
+    }
 
 }
 
