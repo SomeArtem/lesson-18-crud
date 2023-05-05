@@ -13,20 +13,22 @@ class Planet{
   atmosphere;
   radius;
   alpha;
-  constructor(x,y,size, atmosphere='red',radius=50){
+  speed;
+  constructor(x,y,speed = 0.1,size, atmosphere='red',radius=50){
     this.pX=x;
     this.pY=y;
     this.size=size;
     this.atmosphere=atmosphere;
     this.radius=radius;
-    this.alpha=0
+    this.alpha=0;
+    this.speed=speed;
   }
   
 
   move(){
     this.x=this.radius*Math.sin(this.alpha) + this.pX;
     this.y=this.radius*Math.cos(this.alpha) + this.pY;
-    this.alpha+=(Math.PI*0.2)/180;
+    this.alpha+=(this.speed*Math.PI)/180;
   }
 
   render(ctx){
@@ -39,12 +41,18 @@ class Planet{
 }
 
 
+class Position{
+  constructor(x,y){
+    this.x=x;
+    this.y=y;
+  }
+}
 
 const planets=[
-  new Planet(200,200,30,'red', 50),
-  new Planet(200,200,10,'blue', 100),
-  new Planet(200,200,20,'green', 150),
-  new Planet(200,200,50,'yellow', 200),
+  new Planet(200,200,0.1,30,'red', 50),
+  new Planet(200,200,0.2,10,'blue', 100),
+  new Planet(200,200,0.4,20,'green', 150),
+  new Planet(200,200,0.5,50,'yellow', 200),
 ]
 
 
