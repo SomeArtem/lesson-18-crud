@@ -5,29 +5,29 @@ import presetIcons from "@unocss/preset-icons";
 import presetWebFonts from "@unocss/preset-web-fonts";
 export default {
   plugins: [
-    UnoCSS({
-      include:['./index.html', 'main.js', './src/**/**.js'],
-      presets: [
-        presetUno(),
-        presetIcons({
-          /* options */
-        }),
-        presetWebFonts({
-          provider: "google", // default provider
-          fonts: {
-            // these will extend the default theme
-            sans: {
-              name: "Noto Sans",
-              weights: ["400", "700"],
-              italic: false,
-            },
-            header: "Montserrat",
-          },
-        }),
-      ], // disable default preset
-      rules: [
-        // your custom rules
-      ],
-    }),
+    // UnoCSS({
+    //   include:['./index.html', 'main.js', './src/**/**.js'],
+    //   presets: [
+    //     presetUno(),
+    //     presetIcons({
+    //       /* options */
+    //     }),
+    //     presetWebFonts({
+    //       provider: "google", // default provider
+    //       fonts: {
+    //         // these will extend the default theme
+    //         sans: {
+    //           name: "Noto Sans",
+    //           weights: ["400", "700"],
+    //           italic: false,
+    //         },
+    //         header: "Montserrat",
+    //       },
+    //     }),
+    //   ], // disable default preset
+    //   rules: [
+    //     // your custom rules
+    //   ],
+    // }),
   ],
 };

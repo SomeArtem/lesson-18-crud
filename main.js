@@ -12,12 +12,21 @@ class Planet{
   size;
   atmosphere;
   radius;
+  alpha;
   constructor(x,y,size, atmosphere='red',radius=50){
     this.pX=x;
     this.pY=y;
     this.size=size;
     this.atmosphere=atmosphere;
     this.radius=radius;
+    this.alpha=0
+  }
+  
+
+  move(){
+    this.x=this.radius*Math.sin(this.alpha) + this.pX;
+    this.y=this.radius*Math.cos(this.alpha) + this.pY;
+    this.alpha+=(Math.PI*0.2)/180;
   }
 
   render(ctx){
@@ -30,9 +39,6 @@ class Planet{
 }
 
 
-let SPEED_MULT=0.2;
-
-let alpha=0;
 
 const planets=[
   new Planet(200,200,30,'red', 50),
@@ -46,33 +52,13 @@ let planet;
 
 const render = () => {
   ctx.clearRect(0,0,canvas.width, canvas.height); 
-  // ctx.beginPath();
 
-  for (const planetIndex in planets) {
-    // console.log(planetIndex);    
+  for (const planetIndex in planets) {    
     planet=planets[planetIndex];
-    planet.x=planet.radius*Math.sin(alpha) + planet.pX;
-    planet.y=planet.radius*Math.cos(alpha) + planet.pY;
-    alpha+=(Math.PI*SPEED_MULT)/180;
-
+    planet.move();
     planet.render(ctx);
-
-
-
-
-
-  }
-
-  
-  window.requestAnimationFrame(render);
-  
+  }  
+  window.requestAnimationFrame(render);  
 };
 
 window.requestAnimationFrame(render);
-
-
-// ctx.fillStyle='#214';
-// ctx.beginPath();
-// ctx.arc(50,50,50,0,Math.PI*2,)
-// ctx.fill();
-// ctx.endPath();
