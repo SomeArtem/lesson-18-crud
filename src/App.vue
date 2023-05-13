@@ -1,23 +1,37 @@
 <script setup>
-import HelloWorld from "./components/HelloWorld.vue";
+//import HelloWorld from "./components/HelloWorld.vue";
 import MyName from "./components/MyName.vue";
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
-  <MyName />
+  <select name="status" @change="onSelectChange">
+    <option v-if="!status" value="unselected" selected>unselected</option>
+    <option v-for="item in statusList" :value="item" :key="item" :selected="item===status">{{item}}</option>
+  </select>
+  <MyName :status="status" @reset="onStatusReset"/>
 </template>
 
+
+<script>
+  export default{
+    data: ()=>({
+        statusList:['Ready','Start','Stop'],
+        status:null
+    }),
+    methods:{
+      onSelectChange(ev){
+        this.status=ev.target.value
+      },
+      onStatusReset(){
+        this.status=null;
+      }
+
+    }
+  }
+</script>
+
 <style scoped>
-.logo {
+/* .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
@@ -28,5 +42,5 @@ import MyName from "./components/MyName.vue";
 }
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
-}
+} */
 </style>
