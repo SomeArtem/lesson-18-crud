@@ -4,28 +4,31 @@ import MyName from "./components/MyName.vue";
 </script>
 
 <template>
-  <select name="status" @change="onSelectChange">
-    <option v-if="!status" value="unselected" selected>unselected</option>
-    <option v-for="item in statusList" :value="item" :key="item" :selected="item===status">{{item}}</option>
-  </select>
-  <MyName :status="status" @reset="onStatusReset"/>
+  <h3>To do list</h3>
+  <input v-model="inputText" type="text" @keyup.enter="onKeyupEnter">
+  <div>
+    List:
+    <div v-for="todo in todos" :key="todo">{{todo}}</div>
+  </div>
 </template>
 
 
 <script>
   export default{
     data: ()=>({
-        statusList:['Ready','Start','Stop'],
-        status:null
+      inputText:'',
+      todos:[],
     }),
-    methods:{
-      onSelectChange(ev){
-        this.status=ev.target.value
-      },
-      onStatusReset(){
-        this.status=null;
+    computed:{
+      canAddItemToList(){
+        return this.inputText>0;
       }
-
+    },
+    methods:{
+      onKeyupEnter(){
+        this.todos.push(this.inputText);
+        this.inputText='';
+      }
     }
   }
 </script>
