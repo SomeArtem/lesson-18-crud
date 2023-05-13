@@ -12,12 +12,6 @@
 
 <script>
 export default {
-  // name: "MyName",
-  // data() {
-  //   return {
-  //     firstName: "af",
-  //   };
-  // },
   name: "MyName",
   props:{
     status:{
