@@ -46,6 +46,7 @@ export default {
     deleteMethod(el) {
       console.log("delete", el);
       this.todos.splice(el, 1);
+      
     },
   },
   created() {
