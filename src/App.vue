@@ -6,7 +6,7 @@ import TodoItem from "./components/TodoItem.vue";
 
 <template>
   <h3>To do list</h3>
-  <input v-model="inputText" type="text" @keyup.enter="onKeyupEnter" />
+  <input v-model="inputText" type="text" @keyup.enter="canAddItemToList && onKeyupEnter()" />
   <div>
     List:
     <div>
@@ -31,13 +31,17 @@ export default {
   }),
   computed: {
     canAddItemToList() {
-      return this.inputText > 0;
+      return this.todotext.length > 0;
     },
+    todotext(){
+      return this.inputText.trim();
+    }
   },
   methods: {
     onKeyupEnter() {
-      this.todos.push(this.inputText);
+      this.todos.push(this.todotext);
       this.inputText = "";
+      console.log('asdasdasd')
     },
     deleteMethod(el) {
       console.log("delete", el);
