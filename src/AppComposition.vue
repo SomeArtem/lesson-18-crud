@@ -70,11 +70,13 @@ export default {
     this.todos=rawTodos && JSON.parse(rawTodos) || [];
     this.inputText = JSON.parse(localStorage.getItem(LOCAL_KEY_INP_TEXT)||null);
 
-
-
-    // fetch('https://jsonplaceholder.typicode.com/todos?_limit=5')
-    //     .then((response) => response.json())
-    //     .then((rawData) => this.todos = rawData.slice(0, 5).map((item) => item.title));
+    
+    // fetch('http://jsonplaceholder.typicode.com/todos?_start=0&_limit=5')
+    // .then((response)=>{response.json()})
+    // .then((rawData)=>this.todos.push(...rawData.map((item)=>{
+    //   console.log(item.title)
+    //   item.title
+    //   })));
     
     todoStopWatch = this.$watch(
       () => this.todos,
