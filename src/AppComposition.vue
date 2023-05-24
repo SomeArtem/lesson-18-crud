@@ -1,19 +1,52 @@
 <script setup>
+import { computed, onMounted, ref, watch } from 'vue';
 import AppHeader from './components/AppHeader.vue';
-//import HelloWorld from "./components/HelloWorld.vue";
 import MyName from "./components/MyName.vue";
 import TodoItem from "./components/TodoItem.vue";
+
+const LOCAL_KEY_TODOS = "todos";
+const LOCAL_KEY_INP_TEXT = "input_text";
+
+const inputText = ref(JSON.parse(localStorage.getItem(LOCAL_KEY_INP_TEXT)||null));
+const todos = ref(JSON.parse(localStorage.getItem(LOCAL_KEY_TODOS)||'[]'));
+const canAddItemToList=computed(()=>true);
+const gettodotext=computed(()=> inputText.value?.trim());
+const gettodocount=computed(()=> todos.value.length>5 ? 'МНОГА' : todos.value.length);
+const onKeyupEnter =()=>{
+  console.log('onKeyupEnter',gettodotext.value);
+  todos.value.push(gettodotext.value);
+  inputText.value = "";
+}
+
+const deleteMethod =(ind)=>{
+  console.log("deleteMethod", ind);
+  todos.value.splice(ind, 1);
+}
+
+watch(inputText, (value)=>{
+        console.log(value);
+        localStorage.setItem(LOCAL_KEY_INP_TEXT, JSON.stringify(value));
+});
+
+watch(todos, (value) => {
+    console.log('todoStopWatch',value);
+    localStorage.setItem(LOCAL_KEY_TODOS, JSON.stringify(value));
+  }, {deep:true});
+
+onMounted(()=>{
+  console.log('onMounted')
+});
+
 </script>
 
 <template>
-  <AppHeader>
+  <!-- <AppHeader>
     Todo App
     <template #sub-header >
-      <!-- created by {{user.name}} -->
       <span v-if="user">created by {{user.name}}</span>
       <span v-else>noname</span>
     </template>
-  </AppHeader>  
+  </AppHeader>   -->
   <input ref="dominput" v-model="inputText" type="text" @keyup.enter="canAddItemToList && onKeyupEnter()" />
   <div>
     List: <span v-if="todos.length">({{gettodocount}})</span>
@@ -32,74 +65,66 @@ import TodoItem from "./components/TodoItem.vue";
 
 
 <script>
-const LOCAL_KEY_TODOS = "todos";
-const LOCAL_KEY_INP_TEXT = "input_text";
+
 
 let todoStopWatch;
 
 export default {
-  data: () => ({
-    inputText: "",
-    todos: [],
-    user:{name:'Ortem'},
-  }),
-  computed: {
-    canAddItemToList() {
-      return this.todotext.length > 0;
-    },
-    todotext(){
-      return this.inputText.trim();
-    },
-    gettodocount(){return this.todos.length>5 ? 'МНОГА' : this.todos.length}
-  },
-  methods: {
-    onKeyupEnter() {
-      this.todos.push(this.todotext);
-      this.inputText = "";
-      console.log('asdasdasd')
-    },
-    deleteMethod(ind) {
-      console.log("delete", ind);
-      this.todos.splice(ind, 1);
+  components:{}
+//   data: () => ({
+//     inputText: "",
+//     todos: [],
+//     user:{name:'Ortem'},
+//   }),
+//   computed: {
+//     canAddItemToList() {
+//       return this.todotext.length > 0;
+//     },
+//     todotext(){
+//       return this.inputText.trim();
+//     },
+//     gettodocount(){return this.todos.length>5 ? 'МНОГА' : this.todos.length}
+//   },
+//   methods: {
+//     onKeyupEnter() {
+//       this.todos.push(this.todotext);
+//       this.inputText = "";
+//       console.log('asdasdasd')
+//     },
+//     deleteMethod(ind) {
+//       console.log("delete", ind);
+//       this.todos.splice(ind, 1);
 
-    },
-  },
-  created() {
-    const rawTodos = localStorage.getItem(LOCAL_KEY_TODOS);
-    console.log("created rawTodos: ", rawTodos);
-    this.todos=rawTodos && JSON.parse(rawTodos) || [];
-    this.inputText = JSON.parse(localStorage.getItem(LOCAL_KEY_INP_TEXT)||null);
-
+//     },
+//   },
+//   created() {
+//     const rawTodos = localStorage.getItem(LOCAL_KEY_TODOS);
+//     console.log("created rawTodos: ", rawTodos);
+//     this.todos=rawTodos && JSON.parse(rawTodos) || [];
+//     this.inputText = JSON.parse(localStorage.getItem(LOCAL_KEY_INP_TEXT)||null);
     
-    // fetch('http://jsonplaceholder.typicode.com/todos?_start=0&_limit=5')
-    // .then((response)=>{response.json()})
-    // .then((rawData)=>this.todos.push(...rawData.map((item)=>{
-    //   console.log(item.title)
-    //   item.title
-    //   })));
-    
-    todoStopWatch = this.$watch(
-      () => this.todos,
-      (value) => {
-        console.log(value);
-        localStorage.setItem(LOCAL_KEY_TODOS, JSON.stringify(value));
-      }, {deep:true}
-    );
-    this.$watch(
-      () => this.inputText,
-      (value) => {
-        console.log(value);
-        localStorage.setItem(LOCAL_KEY_INP_TEXT, JSON.stringify(value));
-      },);
-  },
+//     todoStopWatch = this.$watch(
+//       () => this.todos,
+//       (value) => {
+//         console.log(value);
+//         localStorage.setItem(LOCAL_KEY_TODOS, JSON.stringify(value));
+//       }, {deep:true}
+//     );
+//     this.$watch(
+//       () => this.inputText,
+//       (value) => {
+//         console.log(value);
+//         localStorage.setItem(LOCAL_KEY_INP_TEXT, JSON.stringify(value));
+//       },);
+//   },
 
-  mounted(){
-    console.log('mounted, dominput: ', this.$refs.dominput)
-  },
+//   mounted(){
+//     console.log('mounted, dominput: ', this.$refs.dominput)
+//   },
 
-  unmounted(){
-    todoStopWatch();
-  }
+//   unmounted(){
+//     todoStopWatch();
+//   }
 };
 </script>
 
