@@ -1,5 +1,6 @@
 import { ref } from 'vue';
-import {parseLocalStorage} from '../utils/StorageUtils'
+import {parseLocalStorage} from '../utils/StorageUtils';
+import { defineStore } from 'pinia';
 
 const LOCAL_KEY_TODOS = "todos";
 const LOCAL_KEY_INP_TEXT = "input_text";
@@ -10,3 +11,11 @@ const todos = ref(parseLocalStorage(LOCAL_KEY_TODOS,'[]'));
 // const gettodocount=computed(()=> todos.value.length>5 ? 'МНОГА' : todos.value.length);
 
 export {todos};
+
+export const useTodosStore = defineStore('todos', {
+    state: () => ({todos:parseLocalStorage(LOCAL_KEY_TODOS,'[]'),}),
+    getters: {
+    },
+    actions: {
+    },
+})

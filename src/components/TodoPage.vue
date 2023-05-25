@@ -2,7 +2,8 @@
     import { computed, onMounted, ref, watch } from 'vue';
     import TodoItem from "./TodoItem.vue";
     import {parseLocalStorage, saveToLocalStorage} from '../utils/StorageUtils'
-    import {todos} from "../store/todosStore"
+    import {useTodosStore} from "../store/todosStore"
+    import { storeToRefs } from 'pinia';
     
     const LOCAL_KEY_TODOS = "todos";
     const LOCAL_KEY_INP_TEXT = "input_text";
@@ -10,6 +11,10 @@
 
     const inputText = ref(parseLocalStorage(LOCAL_KEY_INP_TEXT, null));
     // const todos = ref(parseLocalStorage(LOCAL_KEY_TODOS,'[]'));
+
+
+    const todoStore=useTodosStore();
+    const { todos } = storeToRefs(todoStore);
 
    
 
