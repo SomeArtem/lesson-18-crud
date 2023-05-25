@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from "vue";
+import { computed, onMounted } from "vue";
 
   const props = defineProps({
       index: {
@@ -13,6 +13,8 @@ import { onMounted } from "vue";
     });
   defineEmits(['delete']);
 
+  const pathToEdit=computed(()=> `/todos/${props.index}`);
+
   onMounted(()=>{
     console.log('todoitem props.text', props.text)
   })
@@ -21,7 +23,7 @@ import { onMounted } from "vue";
 
 <template>
   <div>
-    <span>{{ index }}. {{ text }}</span>
+    <span>{{ index }}. <router-link :to="pathToEdit">{{ text }}</router-link></span>
     <button @click="$emit('delete')">delete</button>
   </div>
 </template>

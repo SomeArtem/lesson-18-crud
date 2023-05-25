@@ -1,27 +1,18 @@
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
-import AppComposition from './AppComposition.vue'
-import {createRouter,createWebHashHistory,} from 'vue-router'
-import TodoPage from './components/TodoPage.vue'
-import IndexPage from './components/IndexPage.vue'
+import { createApp } from 'vue';
+import './style.css';
+import App from './App.vue';
+import AppComposition from './AppComposition.vue';
+import router from './router';
+import {createPinia} from 'pinia';
 
 
 
-const router = createRouter({
-    history: createWebHashHistory(),
-    routes: [
-        {
-            path:'/',
-            component: IndexPage
-        },
-        {
-            path:'/todos',
-            component: TodoPage
-        }
+// const pinia = createPinia();
 
-    ], 
-  })
+
+
+
+
   
 
-createApp(AppComposition).use(router).mount('#app')
+createApp(AppComposition).use(router).use(createPinia()).mount('#app');

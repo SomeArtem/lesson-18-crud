@@ -1,9 +1,9 @@
 <script setup>
 import {onMounted, ref} from 'vue';
 import AppHeader from './components/AppHeader.vue';
-import IndexPage from './components/IndexPage.vue';
+// import IndexPage from './components/IndexPage.vue';
 import MyName from "./components/MyName.vue";
-import TodoPage from './components/TodoPage.vue';
+// import TodoPage from './components/TodoPage.vue';
 
 
 const user=ref({name:"Artom"});
@@ -26,7 +26,7 @@ onMounted(()=>{
     <router-link to="/">index</router-link>
     <router-link to="/todos">todos</router-link>
   </div>
-  
+
   <!-- <div>
     <div>Menu</div>
     <span><button @click="onChangePage(PAGES[0])">index</button></span>

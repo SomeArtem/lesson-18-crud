@@ -2,17 +2,20 @@
     import { computed, onMounted, ref, watch } from 'vue';
     import TodoItem from "./TodoItem.vue";
     import {parseLocalStorage, saveToLocalStorage} from '../utils/StorageUtils'
+    import {todos} from "../store/todosStore"
     
     const LOCAL_KEY_TODOS = "todos";
     const LOCAL_KEY_INP_TEXT = "input_text";
 
 
     const inputText = ref(parseLocalStorage(LOCAL_KEY_INP_TEXT, null));
-    const todos = ref(parseLocalStorage(LOCAL_KEY_TODOS,'[]'));
+    // const todos = ref(parseLocalStorage(LOCAL_KEY_TODOS,'[]'));
+
    
 
     const canAddItemToList=computed(()=>true);
     const gettodotext=computed(()=> inputText.value?.trim());
+    // const gettodocount=computed(()=> todos.value.length>5 ? 'МНОГА' : todos.value.length);
     const gettodocount=computed(()=> todos.value.length>5 ? 'МНОГА' : todos.value.length);
     const onKeyupEnter =()=>{
     console.log('onKeyupEnter',gettodotext.value);
