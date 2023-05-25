@@ -22,7 +22,7 @@ onMounted(()=>{
     </template>
   </AppHeader> 
 
-  <div>
+  <div style="margin: 2rem 0">
     <router-link to="/">index</router-link>
     <router-link to="/todos">todos</router-link>
   </div>
