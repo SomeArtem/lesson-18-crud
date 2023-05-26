@@ -22,15 +22,18 @@
     const gettodotext=computed(()=> inputText.value?.trim());
     // const gettodocount=computed(()=> todos.value.length>5 ? 'МНОГА' : todos.value.length);
     const gettodocount=computed(()=> todos.value.length>5 ? 'МНОГА' : todos.value.length);
+
     const onKeyupEnter =()=>{
-    console.log('onKeyupEnter',gettodotext.value);
-    todos.value.push(gettodotext.value);
-    inputText.value = "";
+        console.log('onKeyupEnter',gettodotext.value);
+        // todos.value.push(gettodotext.value);
+        todoStore.creteTodo(gettodotext.value);
+        inputText.value = "";
     }
 
     const deleteMethod =(ind)=>{
-    console.log("deleteMethod", ind);
-    todos.value.splice(ind, 1);
+        console.log("deleteMethod", ind);
+        todoStore.deleteTodoByIndex(ind);
+    // todos.value.splice(ind, 1);
     }
 
     watch(inputText, (value)=>{

@@ -1,13 +1,17 @@
 <script setup>
     import { onMounted, ref } from 'vue';
     import { useRouter, useRoute } from "vue-router";
-import { todos } from '../store/todosStore';
+    import { useTodosStore } from '../store/todosStore';
+
+    const todoStore=useTodosStore();
 
     const router = useRouter();
     const route = useRoute();
     const status=ref(route.query.status);
 
-    const todo=ref(todos.value[parseInt(route.params.id-1)]);
+    const todoIndex=parseInt(route.params.id)-1;
+    const todo=todoStore.getTodoByIndex(todoIndex);
+    // const todo=ref(todos.value[parseInt(route.params.id-1)]);
 
     // const onSelectChange=(e)=>{
     //     console.log('onSelectChange',e.target.value);
