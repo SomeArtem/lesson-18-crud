@@ -18,7 +18,7 @@ app.get('/', async (req, res) => {
           <input type="file"
                  id="img" name="image"
                  accept="image/png, image/jpeg">
-                <input type="submit" value="Submit">
+                <input type="submit" value="Submit"> 
      </form>
       `);
 });
