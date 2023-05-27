@@ -5,7 +5,7 @@
     import {useTodosStore} from "../store/todosStore"
     import { storeToRefs } from 'pinia';
     
-    const LOCAL_KEY_TODOS = "todos";
+    // const LOCAL_KEY_TODOS = "todos";
     const LOCAL_KEY_INP_TEXT = "input_text";
 
 
@@ -14,14 +14,15 @@
 
 
     const todoStore=useTodosStore();
-    const { todos } = storeToRefs(todoStore);
+    const { todos, gettodocount } = storeToRefs(todoStore);
+    // const {gettodocount}=todoStore;
 
    
 
     const canAddItemToList=computed(()=>true);
     const gettodotext=computed(()=> inputText.value?.trim());
     // const gettodocount=computed(()=> todos.value.length>5 ? 'МНОГА' : todos.value.length);
-    const gettodocount=computed(()=> todos.value.length>5 ? 'МНОГА' : todos.value.length);
+    
 
     const onKeyupEnter =()=>{
         console.log('onKeyupEnter',gettodotext.value);
@@ -41,10 +42,10 @@
             saveToLocalStorage(LOCAL_KEY_INP_TEXT, value);
     });
 
-    watch(todos, (value) => {
-        console.log('todoStopWatch',value);
-        saveToLocalStorage(LOCAL_KEY_TODOS, value);
-    }, {deep:true});
+    // watch(todos, (value) => {
+    //     console.log('todoStopWatch',value);
+    //     saveToLocalStorage(LOCAL_KEY_TODOS, value);
+    // }, {deep:true});
 </script>
 
 

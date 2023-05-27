@@ -17,7 +17,8 @@ export const useTodosStore = defineStore('todos', {
     getters: {
         getTodoByIndex:(state)=>{
             return (index)=> state.todos[index]
-        }
+        },
+        gettodocount: (state)=> {return state.todos.length>5 ? 'МНОГА' : state.todos.length},
     },
     actions: {
         creteTodo(todoText){
@@ -27,7 +28,11 @@ export const useTodosStore = defineStore('todos', {
         deleteTodoByIndex(index){
             console.log('deleteTodoByIndex', index);
             this.todos.splice(index, 1);
-        }
+        },
+        editTodoTextByIndex(index, text){
+            console.log('editTodoTextByIndex',index,text);    
+            this.todos[index]=text;                 
+        },
     },
     persist:true,
 })
