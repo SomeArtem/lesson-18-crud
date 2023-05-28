@@ -6,6 +6,15 @@ module.exports = {
       NODE_PORT:3001
    },
     type:'commonjs'
+  },
+  {
+    script: 'users-sqlite.cjs',
+    max_restarts:3,
+    watch: './**',
+    env: {
+      NODE_PORT:3002
+   },
+    type:'commonjs'
   },],
 
   deploy : {
