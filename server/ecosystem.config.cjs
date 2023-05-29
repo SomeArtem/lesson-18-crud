@@ -10,7 +10,6 @@ module.exports = {
   {
     script: 'users-sqlite.cjs',
     max_restarts:3,
-    watch: './**',
     env: {
       NODE_PORT:3002
    },
