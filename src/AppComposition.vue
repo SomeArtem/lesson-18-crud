@@ -1,6 +1,6 @@
 <script setup>
 import { storeToRefs } from 'pinia';
-import {onMounted, ref} from 'vue';
+import {computed, inject, onMounted, ref} from 'vue';
 import AppHeader from './components/AppHeader.vue';
 // import IndexPage from './components/IndexPage.vue';
 import MyName from "./components/MyName.vue";
@@ -8,8 +8,10 @@ import MyName from "./components/MyName.vue";
 
 import { useUserStore } from "./store/userStore";
 
+const pb=inject('pb');
 
-const {user, hasUser}=storeToRefs(useUserStore());
+const {user}=storeToRefs(useUserStore());
+const hasUser=computed(()=> pb.auth);
 
 onMounted(()=>{
   console.log('onMounted');

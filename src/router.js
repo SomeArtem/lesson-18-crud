@@ -9,19 +9,19 @@ const router = createRouter({
     routes: [
         {
             path:'/',
-            component: ()=> import('./components/IndexPage.vue')
+            component: ()=> import('./pages/IndexPage.vue')
         },
         {
             path:'/todos',
-            component: ()=> import('./components/TodoPage.vue')
+            component: ()=> import('./pages/TodoPage.vue')
         },
         {
             path:'/todos/:id',
-            component: ()=> import('./components/TodoEditPage.vue')
+            component: ()=> import('./pages/TodoEditPage.vue')
         },
         {
             path:'/signin',
-            component: ()=> import('./components/SigninPage.vue')
+            component: ()=> import('./pages/SigninPage.vue')
         },
 
     ], 
@@ -34,8 +34,9 @@ const router = createRouter({
 
   router.beforeEach((to, from, next)=>{
     // const userStore=useUserStore()
+    const pb = inject('pb');
     const publicPages=['/','/signin'];
-    const notallowedNavigation=publicPages.indexOf(to.path)<0 && !useUserStore().hasUser;
+    const notallowedNavigation=publicPages.indexOf(to.path)<0 && !pb.authStore.isValid;
     if (notallowedNavigation) return next({path:'/signin'})
     
     next();

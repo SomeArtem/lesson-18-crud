@@ -1,6 +1,6 @@
 <script setup>
     import { computed, onMounted, ref, watch } from 'vue';
-    import TodoItem from "./TodoItem.vue";
+    import TodoItem from "../components/TodoItem.vue";
     import {parseLocalStorage, saveToLocalStorage} from '../utils/StorageUtils'
     import {useTodosStore} from "../store/todosStore"
     import { storeToRefs } from 'pinia';
