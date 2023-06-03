@@ -1,5 +1,6 @@
 import {createRouter,createWebHashHistory} from 'vue-router';
 import { useUserStore } from './store/userStore';
+import { inject } from 'vue'
 
 // import TodoPage from './components/TodoPage.vue';
 // import IndexPage from './components/IndexPage.vue';
