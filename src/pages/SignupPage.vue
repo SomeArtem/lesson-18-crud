@@ -28,9 +28,13 @@
                 }
             }).catch((err)=>{
                 const errorData=err.data.data;
-                for (let item in errorData) {
-                    const data=errorData[item]
-                    errors.value.push(data.message);                    
+                if (errorData){
+                    for (let item in errorData) {
+                        const data=errorData[item]
+                        errors.value.push(data.message);                    
+                    }
+                }else{
+                    errors.value.push(err.message);  
                 }
                 // errors.value=[err.toString()];
             });
