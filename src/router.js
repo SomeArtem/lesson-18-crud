@@ -29,6 +29,10 @@ const router = createRouter({
             path: ROUTES.SIGNUP,
             component: ()=> import('./pages/SignupPage.vue')
         },
+        {
+            path: ROUTES.BOOKS,
+            component: ()=> import('./pages/BooksPage.vue')
+        },
 
     ], 
   });

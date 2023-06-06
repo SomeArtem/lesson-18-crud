@@ -5,7 +5,6 @@ import { useRoute } from 'vue-router';
 import AppHeader from './components/AppHeader.vue';
 import AppMenu from './components/AppMenu.vue';
 // import IndexPage from './components/IndexPage.vue';
-import MyName from "./components/MyName.vue";
 // import TodoPage from './components/TodoPage.vue';
 import ROUTES from "./constants/routes";
 import { useUserStore } from "./store/userStore";
@@ -25,6 +24,7 @@ const checkRouteIsNotCurrent=(route)=>useRoute().path!==route;
 const menyLinks=reactive( [
       {name: 'Index', link:ROUTES.INDEX, canRender:computed(()=> checkRouteIsNotCurrent(ROUTES.INDEX))},
       {name: 'Todos', link:ROUTES.TODOS, canRender:computed(()=> hasUser.value && checkRouteIsNotCurrent(ROUTES.TODOS))},
+      {name: 'Books', link:ROUTES.BOOKS, canRender:computed(()=> hasUser.value && checkRouteIsNotCurrent(ROUTES.BOOKS))},
       {name: 'SignIn', link:ROUTES.SIGNIN, canRender:computed(()=> !hasUser.value && checkRouteIsNotCurrent(ROUTES.SIGNIN))},
       {name: 'SignUp', link:ROUTES.SIGNUP, canRender:computed(()=> !hasUser.value && checkRouteIsNotCurrent(ROUTES.SIGNUP))},
       {name: 'SignOut', link:ROUTES.INDEX, canRender:computed(()=> hasUser.value), onClick:()=>{

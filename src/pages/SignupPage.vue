@@ -28,6 +28,7 @@
                 }
             }).catch((err)=>{
                 const errorData=err.data.data;
+                console.dir(err);
                 if (errorData){
                     for (let item in errorData) {
                         const data=errorData[item]
