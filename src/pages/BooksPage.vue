@@ -4,6 +4,10 @@
     import {parseLocalStorage, saveToLocalStorage} from '../utils/StorageUtils'
     import {useTodosStore} from "../store/todosStore"
     import { storeToRefs } from 'pinia';
+    import { useRoute, useRouter } from 'vue-router';
+
+    const router=useRouter();
+    const route=useRoute();
     
 
     const domInputFile=ref(null);
@@ -11,15 +15,36 @@
     const dombtnupload=ref(false);
     const isPreparing=ref(true);
     const allBooks=ref([]);
+    const pageIndex=ref(Number(router.currentRoute.value.query.page||1));
+    const pagesMax=ref(0);
+    console.log('pageIndex',pageIndex.value);
 
     const pb=inject('pb');
     const BooksCollection = pb.collection('Books');
+
+    const onChangePage=(shift)=>{
+        console.log('onChangePage', shift);
+        pageIndex.value=pageIndex.value + shift;
+        loadBooksOnPage();
+    }
     
-    BooksCollection.getList(1,50).then((result)=>{
+    const loadBooksOnPage = function(){
+        BooksCollection.getList(pageIndex.value,5).then((result)=>{
         console.log(result);
+        pagesMax.value=result.totalPages;
+        console.log('totalPages ',result.totalPages);
         allBooks.value=result.items;
         isPreparing.value=false;
+    }).then(()=>{
+        router.replace({...router.currentRoute, query:{page:pageIndex.value}});
     })
+    }
+
+
+    onMounted(()=>{
+        loadBooksOnPage();
+    });
+
 
     const insertBooks = async (jsondata)=>{  
         console.log('jsondata', jsondata.books)
@@ -85,6 +110,10 @@
     <div v-else>
         <div v-if='allBooks.length>0'>
             BooksPage
+            <br>
+            <br>
+            <button :disabled="pageIndex===1" @click="onChangePage(-1)">prev</button>
+            <button :disabled="pageIndex===pagesMax" @click="onChangePage(1)">next</button>
             <div v-for="book in allBooks" :key="book.id">{{book.title}}</div>
         </div>
         <div >
