@@ -37,6 +37,7 @@
         isPreparing.value=false;
     }).then(()=>{
         router.replace({...router.currentRoute, query:{page:pageIndex.value}});
+        
     })
     }
 
